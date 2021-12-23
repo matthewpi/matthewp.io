@@ -47,7 +47,7 @@ export const links: LinksFunction = () => {
 export function ErrorBoundary({ error }: { error: Error }) {
 	console.error(error);
 	return (
-		<Document title="421 I'm a Teapot">
+		<Document title="418 I'm a Teapot">
 			<ErrorPage
 				code="500"
 				heading="Welp, something went wrong."
