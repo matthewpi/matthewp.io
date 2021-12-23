@@ -1,0 +1,35 @@
+{
+	"compilerOptions": {
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"baseUrl": ".",
+		"jsx": "react-jsx",
+		"target": "ES2019",
+		"paths": {
+			"~/*": ["./app/*"]
+		},
+
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"allowJs": false,
+		"allowSyntheticDefaultImports": false,
+		"esModuleInterop": false,
+		"forceConsistentCasingInFileNames": true,
+		"isolatedModules": true,
+		"newLine": "lf",
+		"noEmit": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"stripInternal": true,
+		"useDefineForClassFields": true
+	},
+	"include": ["remix.env.d.ts", "app/**/*.d.ts", "app/**/*.ts", "app/**/*.tsx"]
+}

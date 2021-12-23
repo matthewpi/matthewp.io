@@ -1,0 +1,6 @@
+/.github
+/.husky
+/.yarn
+/app/tailwind.css
+/public
+/node_modules
