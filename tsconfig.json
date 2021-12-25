@@ -1,9 +1,9 @@
 {
 	"compilerOptions": {
-		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"lib": ["DOM", "DOM.Iterable", "ES2021"],
 		"baseUrl": ".",
 		"jsx": "react-jsx",
-		"target": "ES2019",
+		"target": "ES2021",
 		"paths": {
 			"~/*": ["./app/*"]
 		},
@@ -11,8 +11,8 @@
 		"module": "ESNext",
 		"moduleResolution": "Node",
 		"allowJs": false,
-		"allowSyntheticDefaultImports": false,
-		"esModuleInterop": false,
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"isolatedModules": true,
 		"newLine": "lf",
@@ -31,5 +31,5 @@
 		"stripInternal": true,
 		"useDefineForClassFields": true
 	},
-	"include": ["remix.env.d.ts", "app/**/*.d.ts", "app/**/*.ts", "app/**/*.tsx"]
+	"include": ["remix.env.d.ts", "app/**/*.d.ts", "app/**/*.ts", "app/**/*.tsx", "app/**/*.mdx"]
 }

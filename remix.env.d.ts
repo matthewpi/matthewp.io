@@ -40,6 +40,16 @@ declare module '*.css' {
 	export default string;
 }
 
+declare module '*.json' {
+	export default any;
+}
+
+declare module '*.mdx' {
+	export default string;
+	export const attributes: any;
+	export const filename: string;
+}
+
 /// <reference types="@remix-run/dev" />
 /// <reference types="@remix-run/cloudflare-pages/globals" />
 /// <reference types="@cloudflare/workers-types" />

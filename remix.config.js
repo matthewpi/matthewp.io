@@ -32,4 +32,15 @@ module.exports = {
 	serverModuleFormat: 'esm',
 	serverPlatform: 'neutral',
 	ignoredRouteFiles: ['.*'],
+	mdx: async filename => {
+		const [rehypePrism, remarkMDXCodeMeta] = await Promise.all([
+			import('rehype-highlight').then(mod => mod.default),
+			import('remark-mdx-code-meta').then(mod => mod.remarkMdxCodeMeta),
+		]);
+
+		return {
+			remarkPlugins: [remarkMDXCodeMeta],
+			rehypePlugins: [rehypePrism],
+		};
+	},
 };

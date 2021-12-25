@@ -21,26 +21,44 @@
 //
 
 import { ReactNode } from 'react';
-import type { LinksFunction } from 'remix';
+import type { LinksFunction, MetaFunction } from 'remix';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch } from 'remix';
 
-import styles from '~/tailwind.css';
+import tailwind from '~/tailwind.css';
 import { ErrorPage } from '~/components/Error';
+import { Navigation } from '~/components/Navigation';
+import inter from '~/styles/inter.css';
 
 // https://remix.run/api/app#links
 export const links: LinksFunction = () => {
 	return [
 		{
 			rel: 'preload',
-			href: styles,
+			href: inter,
 			as: 'style',
 			type: 'text/css',
 		},
 		{
 			rel: 'stylesheet',
-			href: styles,
+			href: inter,
+		},
+		{
+			rel: 'preload',
+			href: tailwind,
+			as: 'style',
+			type: 'text/css',
+		},
+		{
+			rel: 'stylesheet',
+			href: tailwind,
 		},
 	];
+};
+
+export const meta: MetaFunction = () => {
+	return {
+		title: 'Matthew Penner',
+	};
 };
 
 // https://remix.run/docs/en/v1/api/conventions#errorboundary
@@ -75,7 +93,7 @@ export function CatchBoundary() {
 			);
 			break;
 		default:
-			throw new Error(caught.data || caught.statusText);
+			throw new Error(caught.data ?? caught.statusText);
 	}
 
 	return <Document title={`${caught.status} ${caught.statusText}`}>{component}</Document>;
@@ -86,7 +104,7 @@ function Document({ children, title }: { children: ReactNode; title?: string }) 
 		<html lang="en">
 			<head>
 				<meta charSet="utf-8" />
-				<meta name="viewport" content="width=device-width,initial-scale=1" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<Meta />
 				<Links />
 				{title ? <title>{title}</title> : null}
@@ -106,7 +124,19 @@ function Document({ children, title }: { children: ReactNode; title?: string }) 
 export default function App() {
 	return (
 		<Document>
-			<Outlet />
+			<div className="relative overflow-x-hidden">
+				<div className="h-full min-h-screen">
+					<div className="py-6 px-6 lg:px-8">
+						<Navigation />
+					</div>
+
+					<div className="pt-2 sm:pt-6 md:pt-8 lg:pt-10 pb-12 px-4 sm:px-6 lg:px-8">
+						<div className="relative max-w-7xl mx-auto">
+							<Outlet />
+						</div>
+					</div>
+				</div>
+			</div>
 		</Document>
 	);
 }

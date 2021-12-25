@@ -20,22 +20,6 @@
 // SOFTWARE.
 //
 
-import { Navigation } from '~/components/Navigation';
-import type { MetaFunction } from 'remix';
-
-export const meta: MetaFunction = () => {
-	return {
-		title: 'Matthew Penner',
-	};
-};
-
 export default function Index() {
-	return (
-		<div className="relative overflow-x-hidden">
-			<Navigation />
-			<div className="flex items-center justify-center min-h-screen w-screen -mt-16">
-				<h1 className="text-slate-100 text-4xl">Soon&trade;</h1>
-			</div>
-		</div>
-	);
+	return <h1 className="text-slate-900 dark:text-slate-100 text-4xl">Soon&trade;</h1>;
 }

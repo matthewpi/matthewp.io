@@ -24,6 +24,14 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	color-scheme: light dark;
+}
+
 body {
-	@apply bg-slate-900;
+	@apply bg-white dark:bg-slate-900 min-h-screen;
+}
+
+.hljs {
+	background: transparent !important;
 }

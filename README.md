@@ -30,6 +30,12 @@ Install dependencies:
 yarn install --immutable
 ```
 
+Generate blog posts:
+
+```shell
+yarn run generate
+```
+
 Build the application for production:
 
 ```shell
@@ -50,6 +56,13 @@ it will most likely not work with any other platform unless modifications are ma
 Whenever changes are made to the `master` branch, the site will automatically be built and
 deployed by Cloudflare Pages. If a PR is created on the `master` branch, the site will be
 deployed as a preview on a separate domain.
+
+### Adding a Blog Post
+
+The way blog posts are added to the site is done through a CMS and a code generation script.
+More information and documentation on this will be added later.
+
+The code generation script is written with generics, `go1.18beta1` or above is required to build it.
 
 ## Tech Stack
 

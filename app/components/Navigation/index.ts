@@ -20,4 +20,5 @@
 // SOFTWARE.
 //
 
+export * from './Logo';
 export * from './Navigation';
