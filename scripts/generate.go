@@ -211,6 +211,7 @@ type Metadata struct {
 	Summary     string           `yaml:"summary"`
 	Image       string           `yaml:"image"`
 	PublishedAt time.Time        `yaml:"publishedAt"`
+	UpdatedAt   time.Time        `yaml:"updatedAt"`
 	ReadTime    string           `yaml:"readTime,omitempty"`
 	Authors     []MetadataAuthor `yaml:"authors"`
 }
@@ -246,6 +247,7 @@ func getFileContent(article Article) ([]byte, error) {
 		Summary:     article.Summary,
 		Image:       article.Image,
 		PublishedAt: publishedAt,
+		UpdatedAt:   article.UpdatedAt,
 		ReadTime:    article.ReadTime,
 		Authors:     authors,
 	}); err != nil {

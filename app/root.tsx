@@ -23,10 +23,12 @@
 import { ReactNode } from 'react';
 import type { LinksFunction, MetaFunction } from 'remix';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch } from 'remix';
+import type { Brand, WithContext } from 'schema-dts';
 
 import tailwind from '~/tailwind.css';
 import { ErrorPage } from '~/components/Error';
 import { Navigation } from '~/components/Navigation';
+import { MatthewPenner, MatthewPennerBlog, MatthewPennerBrand } from '~/data/schemas';
 import inter from '~/styles/inter.css';
 
 // https://remix.run/api/app#links
@@ -58,6 +60,12 @@ export const links: LinksFunction = () => {
 export const meta: MetaFunction = () => {
 	return {
 		title: 'Matthew Penner',
+		description: 'Nerd',
+		'og:site_name': 'Matthew Penner',
+		'og:description': 'Nerd',
+		'og:image': 'https://matthewp.io/icon.svg',
+		'og:url': 'https://matthewp.io',
+		'og:type': 'website',
 	};
 };
 
@@ -114,6 +122,33 @@ function Document({ children, title }: { children: ReactNode; title?: string }) 
 				<ScrollRestoration />
 				<Scripts />
 				{process.env.NODE_ENV === 'development' && <LiveReload />}
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{
+						__html: JSON.stringify({
+							'@context': 'https://schema.org',
+							...Object(MatthewPennerBrand),
+						} as WithContext<Brand>),
+					}}
+				/>
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{
+						__html: JSON.stringify({
+							'@context': 'https://schema.org',
+							...Object(MatthewPenner),
+						} as WithContext<Brand>),
+					}}
+				/>
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{
+						__html: JSON.stringify({
+							'@context': 'https://schema.org',
+							...Object(MatthewPennerBlog),
+						} as WithContext<Brand>),
+					}}
+				/>
 			</body>
 		</html>
 	);

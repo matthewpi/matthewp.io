@@ -41,6 +41,7 @@ export interface Attributes {
 	image: string;
 	imageAttribution?: Attribution;
 	publishedAt: string;
+	updatedAt: string;
 	readTime?: string;
 	authors: Author[];
 }

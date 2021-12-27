@@ -21,7 +21,7 @@
 //
 
 import type { ComponentType } from 'react';
-import type { MetaFunction } from 'remix';
+import type { HtmlMetaDescriptor, MetaFunction } from 'remix';
 
 import type { Attributes } from './BlogPost';
 import { BlogPost } from './BlogPost';
@@ -33,9 +33,27 @@ interface BlogPostComponent {
 
 export function generateBlogPost({ default: Component, attributes }: BlogPostComponent) {
 	const meta: MetaFunction = () => {
-		return {
+		const base: HtmlMetaDescriptor = {
 			title: `${attributes.title} | Matthew Penner`,
+			description: attributes.summary,
+			'og:site_name': 'Matthew Penner',
+			'og:title': attributes.title,
+			'og:description': attributes.summary,
+			'og:image': attributes.image,
+			'og:url': 'https://matthewp.io/blog/' + attributes.slug,
+			'og:type': 'article',
+			// On the server, publishedAt and updatedAt are dates, not strings.
+			'og:article:published_time': (attributes.publishedAt as unknown as Date).toJSON(),
+			'og:article:modified_time': (attributes.updatedAt as unknown as Date).toJSON(),
+			'og:article:section': 'Technology',
 		};
+
+		if (attributes.authors.length > 0 && attributes.authors[0] !== undefined) {
+			base['og:article:author:first_name'] = attributes.authors[0].name.split(' ')[0] ?? '';
+			base['og:article:author:last_name'] = attributes.authors[0].name.split(' ')[1] ?? '';
+		}
+
+		return base;
 	};
 
 	const Post = () => {
