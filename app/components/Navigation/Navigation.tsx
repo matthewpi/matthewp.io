@@ -94,7 +94,7 @@ export function Navigation() {
 						</div>
 						<div className="px-2 pt-2 pb-3 space-y-1">
 							{navigation.map(item => (
-								<Popover.Button as={Fragment} key={item.name}>
+								<Popover.Button key={item.name} as={Fragment}>
 									<NavLink
 										to={item.href}
 										className={({ isActive }) =>

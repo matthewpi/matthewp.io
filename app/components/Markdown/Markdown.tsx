@@ -32,7 +32,7 @@ interface MarkdownProps {
 export function Markdown({ contents: Component }: MarkdownProps) {
 	return (
 		<Component
-			// @ts-ignore: Bug in Remix. They didn't grab the full types from xdm.
+			// @ts-expect-error: Bug in Remix, missing full types from xdm.
 			components={{
 				a: SmartLink,
 				pre: CodeBlock,

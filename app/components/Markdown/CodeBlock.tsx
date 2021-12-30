@@ -59,8 +59,8 @@ export function CodeBlock({
 	const matches = /language-(\w+)/.exec((codeProps as any).className);
 	const language = (matches ? matches[1] : 'txt') ?? 'txt';
 	const lines = highlightJs.highlight(code, { language }).value.split('\n');
-	const numLines = lines.length;
-	const maxDigits = numLines.toString().length;
+	const lineCount = lines.length;
+	const maxDigits = lineCount.toString().length;
 
 	return (
 		<div
@@ -112,7 +112,11 @@ export function CodeBlock({
 			<pre className="overflow-auto bg-transparent p-0 mt-0 rounded-t-none">
 				<code
 					{...codeProps}
-					className={'py-[1rem] px-[1.5rem] hljs ' + (codeProps as any).className ?? ''}
+					className={
+						'py-[1rem] px-[1.5rem] hljs ' +
+						((codeProps as { className?: string }).className ?? '')
+					}
+					// eslint-disable-next-line react/no-danger
 					dangerouslySetInnerHTML={{
 						__html: lines
 							.map((line, i) => {
@@ -123,7 +127,7 @@ export function CodeBlock({
 									return `<span class="before:content-['__']" />${line}`;
 								}
 
-								if (numLines > 1 && lineNumbers) {
+								if (lineCount > 1 && lineNumbers) {
 									return `<span class="md:before:content-[attr(data-line-number)] before:text-slate-600 dark:before:text-slate-700" data-line-number="${(
 										i + 1
 									)

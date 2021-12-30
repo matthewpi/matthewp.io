@@ -23,7 +23,7 @@
 /**
  * @type {import('@remix-run/dev/config').AppConfig}
  */
-module.exports = {
+const config = {
 	appDirectory: 'app',
 	assetsBuildDirectory: 'public/build',
 	devServerBroadcastDelay: 1000,
@@ -32,10 +32,13 @@ module.exports = {
 	serverModuleFormat: 'esm',
 	serverPlatform: 'neutral',
 	ignoredRouteFiles: ['.*'],
-	mdx: async filename => {
+
+	mdx: async () => {
 		const [rehypePrism, remarkMDXCodeMeta] = await Promise.all([
+			/* eslint-disable node/no-unsupported-features/es-syntax */
 			import('rehype-highlight').then(mod => mod.default),
 			import('remark-mdx-code-meta').then(mod => mod.remarkMdxCodeMeta),
+			/* eslint-enable node/no-unsupported-features/es-syntax */
 		]);
 
 		return {
@@ -44,3 +47,6 @@ module.exports = {
 		};
 	},
 };
+
+// eslint-disable-next-line unicorn/prefer-module
+module.exports = config;

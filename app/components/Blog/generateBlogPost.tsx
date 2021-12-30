@@ -56,12 +56,10 @@ export function generateBlogPost({ default: Component, attributes }: BlogPostCom
 		return base;
 	};
 
-	const Post = () => {
-		return <BlogPost Component={Component} attributes={attributes} />;
-	};
-
 	return {
 		meta,
-		default: Post,
+		default: () => {
+			return <BlogPost Component={Component} attributes={attributes} />;
+		},
 	};
 }

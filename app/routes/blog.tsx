@@ -48,17 +48,23 @@ export const links: LinksFunction = () => {
 	return [
 		{
 			rel: 'preload',
-			href: hack,
+			href: hack as string,
 			as: 'style',
 			type: 'text/css',
 		},
 		{
 			rel: 'stylesheet',
-			href: hack,
+			href: hack as string,
+		},
+		{
+			rel: 'preload',
+			href: stackOverflowDark as string,
+			as: 'style',
+			type: 'text/css',
 		},
 		{
 			rel: 'stylesheet',
-			href: stackOverflowDark,
+			href: stackOverflowDark as string,
 		},
 	];
 };
@@ -66,16 +72,17 @@ export const links: LinksFunction = () => {
 export const loader: LoaderFunction = async () => {
 	const articles: Article[] = [];
 
-	generatedArticles.data.forEach(({ attributes: article }: any) => {
+	/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+	for (const { attributes: article } of generatedArticles.data) {
 		const authors: Author[] = [];
 
-		article.authors.data.forEach(({ attributes: author }: any) => {
+		for (const { attributes: author } of article.authors.data) {
 			authors.push({
 				avatar: author.avatar,
 				name: author.name,
 				url: author.url,
 			});
-		});
+		}
 
 		articles.push({
 			slug: article.slug,
@@ -84,10 +91,12 @@ export const loader: LoaderFunction = async () => {
 			image: article.image,
 			createdAt: article.createdAt,
 			publishedAt: article.publishedAt,
+			// @ts-expect-error TypeScript is trying to assume the type of `article` when it should be `any`
 			readTime: article.readTime,
 			authors,
 		});
-	});
+	}
+	/* eslint-enable @typescript-eslint/no-unsafe-assignment */
 
 	return articles;
 };
@@ -104,7 +113,7 @@ function BlogIndex() {
 					From the blog
 				</h2>
 				<p className="mt-3 max-w-2xl mx-auto text-xl text-slate-500 sm:mt-4">
-					Collection of articles I've written, primarily about technology and fun but
+					Collection of articles I&apos;ve written, primarily about technology and fun but
 					pointless experiments.
 				</p>
 			</div>
@@ -129,7 +138,7 @@ function BlogIndex() {
 									</p>
 								</Link>
 							</div>
-							{article.authors[0] !== undefined ? (
+							{article.authors[0] === undefined ? null : (
 								<div className="mt-6 flex items-center">
 									<div className="flex-shrink-0">
 										<a
@@ -163,16 +172,16 @@ function BlogIndex() {
 													article.publishedAt ?? article.createdAt,
 												).toLocaleDateString('en-CA')}
 											</time>
-											{article.readTime !== undefined ? (
+											{article.readTime === undefined ? null : (
 												<>
 													<span aria-hidden="true">&middot;</span>
 													<span>{article.readTime} read</span>
 												</>
-											) : null}
+											)}
 										</div>
 									</div>
 								</div>
-							) : null}
+							)}
 						</div>
 					</div>
 				))}
@@ -183,7 +192,7 @@ function BlogIndex() {
 
 export default function Blog() {
 	const matches = useMatches();
-	const pathname = (matches[matches.length - 1] ?? { pathname: '' }).pathname;
+	const { pathname } = matches[matches.length - 1] ?? { pathname: '' };
 
 	const isBlogPost = IS_BLOG_POST_REGEXP.test(pathname);
 

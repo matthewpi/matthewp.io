@@ -21,8 +21,8 @@
 //
 
 import { createPagesFunctionHandler } from '@remix-run/cloudflare-pages';
+import type { ServerBuild } from '@remix-run/server-runtime';
 
-// @ts-ignore
 import * as build from '../build';
 
 export interface Env {
@@ -30,7 +30,7 @@ export interface Env {
 }
 
 const handleRequest = createPagesFunctionHandler({
-	build,
+	build: build as unknown as ServerBuild,
 });
 
 export async function onRequest(context: EventContext<Env, any, any>): Promise<Response> {

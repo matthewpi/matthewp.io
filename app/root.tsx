@@ -23,7 +23,7 @@
 import { ReactNode } from 'react';
 import type { LinksFunction, MetaFunction } from 'remix';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch } from 'remix';
-import type { Brand, WithContext } from 'schema-dts';
+import type { Blog, Brand, Person, WithContext } from 'schema-dts';
 
 import tailwind from '~/tailwind.css';
 import { ErrorPage } from '~/components/Error';
@@ -36,23 +36,23 @@ export const links: LinksFunction = () => {
 	return [
 		{
 			rel: 'preload',
-			href: inter,
+			href: inter as string,
 			as: 'style',
 			type: 'text/css',
 		},
 		{
 			rel: 'stylesheet',
-			href: inter,
+			href: inter as string,
 		},
 		{
 			rel: 'preload',
-			href: tailwind,
+			href: tailwind as string,
 			as: 'style',
 			type: 'text/css',
 		},
 		{
 			rel: 'stylesheet',
-			href: tailwind,
+			href: tailwind as string,
 		},
 	];
 };
@@ -121,32 +121,37 @@ function Document({ children, title }: { children: ReactNode; title?: string }) 
 				{children}
 				<ScrollRestoration />
 				<Scripts />
+				{/* eslint-disable-next-line node/prefer-global/process */}
 				{process.env.NODE_ENV === 'development' && <LiveReload />}
 				<script
 					type="application/ld+json"
+					// eslint-disable-next-line react/no-danger
 					dangerouslySetInnerHTML={{
 						__html: JSON.stringify({
 							'@context': 'https://schema.org',
-							...Object(MatthewPennerBrand),
+							...MatthewPennerBrand,
 						} as WithContext<Brand>),
 					}}
 				/>
 				<script
 					type="application/ld+json"
+					// eslint-disable-next-line react/no-danger
 					dangerouslySetInnerHTML={{
 						__html: JSON.stringify({
 							'@context': 'https://schema.org',
-							...Object(MatthewPenner),
-						} as WithContext<Brand>),
+							// @ts-expect-error idk anymore
+							...MatthewPenner,
+						} as WithContext<Person>),
 					}}
 				/>
 				<script
 					type="application/ld+json"
+					// eslint-disable-next-line react/no-danger
 					dangerouslySetInnerHTML={{
 						__html: JSON.stringify({
 							'@context': 'https://schema.org',
-							...Object(MatthewPennerBlog),
-						} as WithContext<Brand>),
+							...MatthewPennerBlog,
+						} as WithContext<Blog>),
 					}}
 				/>
 			</body>

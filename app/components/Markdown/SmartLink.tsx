@@ -35,10 +35,11 @@ function getURL(url: string, base?: string): URL | undefined {
 	}
 }
 
+/* eslint-disable react/prop-types */
 export const SmartLink = forwardRef<
 	HTMLAnchorElement,
 	AnchorHTMLAttributes<HTMLAnchorElement> | LinkProps
->(function SmartLink(props, forwardedRef) {
+>((props, forwardedRef) => {
 	if ('to' in props && props.to) {
 		return <Link ref={forwardedRef} {...props} />;
 	}
@@ -48,6 +49,7 @@ export const SmartLink = forwardRef<
 		if (url === undefined) {
 			return <Link ref={forwardedRef} to={props.href} {...props} />;
 		}
+
 		if (url.protocol === 'relative:' && url.hostname === '') {
 			return <Link ref={forwardedRef} to={url.pathname} {...props} />;
 		}
@@ -55,3 +57,4 @@ export const SmartLink = forwardRef<
 
 	return <ExternalLink ref={forwardedRef} {...props} />;
 });
+/* eslint-enable react/prop-types */

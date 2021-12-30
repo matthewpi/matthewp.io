@@ -13,7 +13,7 @@
 		"//3": "Cloudflare Pages",
 		"worker:start": "wrangler pages dev --kv KV --proxy 3000 public",
 		"//4": "TailwindCSS",
-		"tailwind:_build": "tailwindcss -i app/styles/tailwind.css -o app/tailwind.css",
+		"tailwind:_build": "tailwindcss --config tailwind.config.cjs --input app/styles/tailwind.css --output app/tailwind.css",
 		"tailwind:build": "yarn run tailwind:_build --minify",
 		"tailwind:dev": "yarn run tailwind:_build --watch",
 		"//5": "All the things",
@@ -32,7 +32,7 @@
 		"highlight.js": "11.3.1",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
-		"rehype-highlight": "5.0.1",
+		"rehype-highlight": "5.0.2",
 		"remark-mdx-code-meta": "1.0.0",
 		"remix": "1.1.1",
 		"schema-dts": "1.0.0"
@@ -48,18 +48,27 @@
 		"@tailwindcss/typography": "0.5.0",
 		"@types/react": "17.0.38",
 		"@types/react-dom": "17.0.11",
-		"autoprefixer": "10.4.0",
+		"autoprefixer": "10.4.1",
 		"concurrently": "6.5.1",
-		"esbuild": "0.14.8",
+		"esbuild": "0.14.9",
+		"eslint": "8.5.0",
+		"eslint-config-xo-react": "0.25.0",
+		"eslint-plugin-react": "7.28.0",
+		"eslint-plugin-react-hooks": "4.3.0",
 		"husky": "7.0.4",
 		"lint-staged": "12.1.4",
 		"prettier": "2.5.1",
-		"tailwindcss": "3.0.7",
+		"tailwindcss": "3.0.8",
 		"typescript": "4.5.4",
-		"wrangler": "pages"
+		"wrangler": "pages",
+		"xo": "0.47.0"
 	},
 	"lint-staged": {
-		"**/*.{js,d.ts,ts,tsx}": [
+		"**/*.{cjs,js,mjs,d.ts,ts,tsx}": [
+			"yarn xo --fix",
+			"yarn prettier --write"
+		],
+		"**/*.css": [
 			"yarn prettier --write"
 		],
 		"**/*.json": [
@@ -77,5 +86,34 @@
 		"node": "16.13.0",
 		"yarn": "1.22.17"
 	},
-	"packageManager": "yarn@3.1.1"
+	"packageManager": "yarn@3.1.1",
+	"xo": {
+		"environments": [
+			"esnext"
+		],
+		"extends": [
+			"xo-react"
+		],
+		"prettier": true,
+		"rules": {
+			"import/extensions": 0,
+			"react/react-in-jsx-scope": 0,
+			"unicorn/filename-case": 0
+		},
+		"overrides": [
+			{
+				"files": "app/**/*.tsx",
+				"rules": {
+					"@typescript-eslint/naming-convention": 0,
+					"react/function-component-definition": [
+						2,
+						{
+							"namedComponents": "function-declaration"
+						}
+					],
+					"unicorn/filename-case": 0
+				}
+			}
+		]
+	}
 }

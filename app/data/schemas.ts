@@ -32,6 +32,7 @@ import type {
 	Person,
 } from 'schema-dts';
 
+/* eslint-disable @typescript-eslint/naming-convention */
 const BownessHighSchool: EducationalOrganization = {
 	'@type': 'EducationalOrganization',
 	'@id': 'https://matthewp.io/#BownessHighSchool',
@@ -181,5 +182,6 @@ const MatthewPennerBlog: Blog = {
 	name: 'Blog',
 	url: 'https://matthewp.io/blog',
 };
+/* eslint-enable @typescript-eslint/naming-convention */
 
 export { MatthewPenner, MatthewPennerBlog, MatthewPennerBrand };

@@ -23,9 +23,11 @@
 import type { AnchorHTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 
+/* eslint-disable react/prop-types */
 export const ExternalLink = forwardRef<HTMLAnchorElement, AnchorHTMLAttributes<HTMLAnchorElement>>(
-	function ExternalLink({ rel, target, ...props }, forwardedRef) {
+	({ rel, target, ...props }, forwardedRef) => {
 		return (
+			// eslint-disable-next-line react/jsx-no-target-blank
 			<a
 				ref={forwardedRef}
 				rel={rel ?? 'nofollow noopener noreferrer'}
@@ -35,3 +37,4 @@ export const ExternalLink = forwardRef<HTMLAnchorElement, AnchorHTMLAttributes<H
 		);
 	},
 );
+/* eslint-enable react/prop-types */

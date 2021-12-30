@@ -20,8 +20,9 @@
 // SOFTWARE.
 //
 
-import { Markdown, SmartLink } from '~/components/Markdown';
 import { ComponentType } from 'react';
+
+import { Markdown, SmartLink } from '~/components/Markdown';
 
 interface Author {
 	avatar: string;
@@ -65,7 +66,7 @@ export function BlogPost({ Component, attributes: article }: BlogPostProps) {
 
 				<figure className="mt-6">
 					<img src={article.image} className="w-full rounded-lg" alt="" />
-					{article.imageAttribution !== undefined ? (
+					{article.imageAttribution === undefined ? null : (
 						<figcaption className="text-center mt-2">
 							<SmartLink
 								href={article.imageAttribution.link}
@@ -74,7 +75,7 @@ export function BlogPost({ Component, attributes: article }: BlogPostProps) {
 								{article.imageAttribution.name}
 							</SmartLink>
 						</figcaption>
-					) : null}
+					)}
 				</figure>
 
 				<div className="flex flex-col sm:flex-row mt-6">
