@@ -23,6 +23,7 @@
 import { createPagesFunctionHandler } from '@remix-run/cloudflare-pages';
 import type { ServerBuild } from '@remix-run/server-runtime';
 
+// @ts-expect-error Remix
 import * as build from '../build';
 
 export interface Env {
@@ -34,5 +35,31 @@ const handleRequest = createPagesFunctionHandler({
 });
 
 export async function onRequest(context: EventContext<Env, any, any>): Promise<Response> {
-	return handleRequest(context);
+	const ifNoneMatch =
+		// eslint-disable-next-line node/prefer-global/process
+		process.env.NODE_ENV === 'production' ? context.request.headers.get('if-none-match') : null;
+
+	return handleRequest({
+		...context,
+		env: {
+			...context.env,
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			ASSETS: {
+				...context.env.ASSETS,
+				fetch: async (request: Request | string, requestInitr?: RequestInit | Request) => {
+					if (
+						typeof request !== 'string' &&
+						ifNoneMatch !== null &&
+						!request.headers.has('if-none-match')
+					) {
+						request.headers.set('if-none-match', ifNoneMatch);
+					}
+
+					const response = await context.env.ASSETS.fetch(request, requestInitr);
+					response.headers.set('cache-control', 'public, max-age=31536000, immutable');
+					return response;
+				},
+			},
+		},
+	});
 }
