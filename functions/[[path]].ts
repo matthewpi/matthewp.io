@@ -55,8 +55,18 @@ export async function onRequest(context: EventContext<Env, any, any>): Promise<R
 						request.headers.set('if-none-match', ifNoneMatch);
 					}
 
-					const response = await context.env.ASSETS.fetch(request, requestInitr);
-					response.headers.set('cache-control', 'public, max-age=31536000, immutable');
+					let response = await context.env.ASSETS.fetch(request, requestInitr);
+					if (response.ok) {
+						response = new Response(
+							[101, 204, 205, 304].includes(response.status) ? null : response.body,
+							response,
+						);
+						response.headers.set(
+							'cache-control',
+							'public, max-age=31536000, immutable',
+						);
+					}
+
 					return response;
 				},
 			},
