@@ -37,17 +37,13 @@ declare module 'process' {
 }
 
 declare module '*.css' {
-	export default string;
+	const asset: string;
+	export default asset;
 }
 
 declare module '*.json' {
-	export default any;
-}
-
-declare module '*.mdx' {
-	export default string;
-	export const attributes: any;
-	export const filename: string;
+	const asset: string;
+	export default asset;
 }
 
 /// <reference types="@remix-run/dev" />

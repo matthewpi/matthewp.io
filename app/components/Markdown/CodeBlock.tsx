@@ -20,13 +20,14 @@
 // SOFTWARE.
 //
 
-import ClipboardCopyIcon from '@heroicons/react/outline/ClipboardCopyIcon';
-import ClipboardCheckIcon from '@heroicons/react/outline/ClipboardCheckIcon';
 import ArrowsExpandIcon from '@heroicons/react/outline/ArrowsExpandIcon';
+import ClipboardCheckIcon from '@heroicons/react/outline/ClipboardCheckIcon';
+import ClipboardCopyIcon from '@heroicons/react/outline/ClipboardCopyIcon';
 import copyToClipboard from 'copy-to-clipboard';
-import highlightJs from 'highlight.js';
-import type { DetailedHTMLProps, HTMLAttributes } from 'react';
-import { Component, useState } from 'react';
+import { decode } from 'html-entities';
+import type { DetailedHTMLProps, HTMLAttributes, ReactElement } from 'react';
+import { useState } from 'react';
+import { renderToString } from 'react-dom/server';
 
 interface CodeBlockProps {
 	filename?: string;
@@ -38,13 +39,18 @@ export function CodeBlock({
 	filename,
 	terminal = false,
 	lineNumbers = true,
+	children,
 	...props
 }: DetailedHTMLProps<HTMLAttributes<HTMLPreElement>, HTMLPreElement> & CodeBlockProps) {
-	const { children, ...codeProps } = (props.children as Component).props;
-	const code = children?.toString().trimEnd() ?? '';
-
 	const [expanded, setExpanded] = useState(false);
 	const [copied, setCopied] = useState(false);
+
+	const child = renderToString(children as ReactElement);
+	const code = decode(child.replace(/(<([^>]+)>)/gi, '').trim());
+	const label = filename ? filename : terminal ? 'Terminal' : undefined;
+	const lines = child.trim().split('\n');
+	const lineCount = lines.length;
+	const maxDigits = lineCount.toString().length;
 
 	const copyCode = () => {
 		copyToClipboard(code);
@@ -54,13 +60,6 @@ export function CodeBlock({
 			setCopied(false);
 		}, 3000);
 	};
-
-	const label = filename ? filename : terminal ? 'Terminal' : undefined;
-	const matches = /language-(\w+)/.exec((codeProps as any).className);
-	const language = (matches ? matches[1] : 'txt') ?? 'txt';
-	const lines = highlightJs.highlight(code, { language }).value.split('\n');
-	const lineCount = lines.length;
-	const maxDigits = lineCount.toString().length;
 
 	return (
 		<div
@@ -111,11 +110,7 @@ export function CodeBlock({
 
 			<pre className="overflow-auto bg-transparent p-0 mt-0 rounded-t-none">
 				<code
-					{...codeProps}
-					className={
-						'py-[1rem] px-[1.5rem] hljs ' +
-						((codeProps as { className?: string }).className ?? '')
-					}
+					className={`py-[1rem] px-[1.5rem] ${props.className ?? ''}`.trimEnd()}
 					// eslint-disable-next-line react/no-danger
 					dangerouslySetInnerHTML={{
 						__html: lines

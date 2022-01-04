@@ -17,8 +17,9 @@
 		"tailwind:build": "yarn run tailwind:_build --minify",
 		"tailwind:dev": "yarn run tailwind:_build --watch",
 		"//5": "All the things",
-		"build": "yarn run generate && yarn run tailwind:build && yarn run remix:build",
-		"dev": "yarn run generate && concurrently \"yarn run tailwind:dev\" \"yarn run remix:watch\" \"yarn run worker:start\"",
+		"clean": "rimraf build public/build",
+		"build": "yarn run clean && yarn run generate && yarn run tailwind:build && yarn run remix:build",
+		"dev": "concurrently \"yarn run tailwind:dev\" \"yarn run remix:watch\" \"yarn run worker:start\"",
 		"//6": "Code Generation",
 		"generate": "./scripts/generate"
 	},
@@ -30,10 +31,10 @@
 		"@remix-run/server-runtime": "1.1.1",
 		"copy-to-clipboard": "3.3.1",
 		"highlight.js": "11.3.1",
+		"html-entities": "2.3.2",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
 		"rehype-highlight": "5.0.2",
-		"remark-mdx-code-meta": "1.0.0",
 		"remix": "1.1.1",
 		"schema-dts": "1.0.0"
 	},
@@ -58,6 +59,7 @@
 		"husky": "7.0.4",
 		"lint-staged": "12.1.5",
 		"prettier": "2.5.1",
+		"rimraf": "3.0.2",
 		"tailwindcss": "3.0.10",
 		"typescript": "4.5.4",
 		"wrangler": "pages",
@@ -115,5 +117,8 @@
 				}
 			}
 		]
+	},
+	"resolutions": {
+		"rehype-highlight@5.0.2": "patch:rehype-highlight@npm:5.0.2#.yarn/patches/rehype-highlight-npm-5.0.2-81d9177657"
 	}
 }

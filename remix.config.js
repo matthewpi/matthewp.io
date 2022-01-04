@@ -34,16 +34,14 @@ const config = {
 	ignoredRouteFiles: ['.*'],
 
 	mdx: async () => {
-		const [rehypePrism, remarkMDXCodeMeta] = await Promise.all([
+		const [rehypeHighlight] = await Promise.all([
 			/* eslint-disable node/no-unsupported-features/es-syntax */
 			import('rehype-highlight').then(mod => mod.default),
-			import('remark-mdx-code-meta').then(mod => mod.remarkMdxCodeMeta),
 			/* eslint-enable node/no-unsupported-features/es-syntax */
 		]);
 
 		return {
-			remarkPlugins: [remarkMDXCodeMeta],
-			rehypePlugins: [rehypePrism],
+			rehypePlugins: [rehypeHighlight],
 		};
 	},
 };

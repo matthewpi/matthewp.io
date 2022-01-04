@@ -20,10 +20,16 @@
 // SOFTWARE.
 //
 
-import type { ComponentType } from 'react';
+import type { ComponentType, DetailedHTMLProps, HTMLAttributes } from 'react';
 
 import { CodeBlock } from './CodeBlock';
 import { SmartLink } from './SmartLink';
+
+function CodeContainer({
+	children,
+}: DetailedHTMLProps<HTMLAttributes<HTMLPreElement>, HTMLPreElement>) {
+	return children;
+}
 
 interface MarkdownProps {
 	contents: ComponentType;
@@ -35,7 +41,8 @@ export function Markdown({ contents: Component }: MarkdownProps) {
 			// @ts-expect-error: Bug in Remix, missing full types from xdm.
 			components={{
 				a: SmartLink,
-				pre: CodeBlock,
+				pre: CodeContainer,
+				code: CodeBlock,
 			}}
 		/>
 	);

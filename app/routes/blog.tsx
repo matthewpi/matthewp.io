@@ -39,7 +39,7 @@ interface Article {
 	summary: string;
 	image: string;
 	createdAt: string;
-	publishedAt: string | null;
+	publishedAt?: string;
 	readTime?: string;
 	authors: Author[];
 }
@@ -48,23 +48,23 @@ export const links: LinksFunction = () => {
 	return [
 		{
 			rel: 'preload',
-			href: hack as string,
+			href: hack,
 			as: 'style',
 			type: 'text/css',
 		},
 		{
 			rel: 'stylesheet',
-			href: hack as string,
+			href: hack,
 		},
 		{
 			rel: 'preload',
-			href: stackOverflowDark as string,
+			href: stackOverflowDark,
 			as: 'style',
 			type: 'text/css',
 		},
 		{
 			rel: 'stylesheet',
-			href: stackOverflowDark as string,
+			href: stackOverflowDark,
 		},
 	];
 };
@@ -72,7 +72,6 @@ export const links: LinksFunction = () => {
 export const loader: LoaderFunction = async () => {
 	const articles: Article[] = [];
 
-	/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 	for (const { attributes: article } of generatedArticles.data) {
 		const authors: Author[] = [];
 
@@ -90,13 +89,11 @@ export const loader: LoaderFunction = async () => {
 			summary: article.summary,
 			image: article.image,
 			createdAt: article.createdAt,
-			publishedAt: article.publishedAt,
-			// @ts-expect-error TypeScript is trying to assume the type of `article` when it should be `any`
+			publishedAt: article.publishedAt ?? undefined,
 			readTime: article.readTime,
 			authors,
 		});
 	}
-	/* eslint-enable @typescript-eslint/no-unsafe-assignment */
 
 	return articles;
 };
