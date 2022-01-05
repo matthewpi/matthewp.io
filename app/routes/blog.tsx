@@ -20,84 +20,18 @@
 // SOFTWARE.
 //
 
-import stackOverflowDark from 'highlight.js/styles/stackoverflow-dark.css';
-import type { LinksFunction, LoaderFunction } from 'remix';
-import { Link, useLoaderData, Outlet, useMatches } from 'remix';
+import type { LoaderFunction } from 'remix';
+import { Link, Outlet, useLoaderData, useMatches, json } from 'remix';
 
-import generatedArticles from '~/generated/articles.json';
-import hack from '~/styles/hack.css';
+import type { Article, DataFunctionArgs } from '~/types';
 
-interface Author {
-	avatar: string;
-	name: string;
-	url: string;
-}
-
-interface Article {
-	slug: string;
-	title: string;
-	summary: string;
-	image: string;
-	createdAt: string;
-	publishedAt?: string;
-	readTime?: string;
-	authors: Author[];
-}
-
-export const links: LinksFunction = () => {
-	return [
-		{
-			rel: 'preload',
-			href: hack,
-			as: 'style',
-			type: 'text/css',
-		},
-		{
-			rel: 'stylesheet',
-			href: hack,
-		},
-		{
-			rel: 'preload',
-			href: stackOverflowDark,
-			as: 'style',
-			type: 'text/css',
-		},
-		{
-			rel: 'stylesheet',
-			href: stackOverflowDark,
-		},
-	];
-};
-
-export const loader: LoaderFunction = async () => {
-	const articles: Article[] = [];
-
-	for (const { attributes: article } of generatedArticles.data) {
-		const authors: Author[] = [];
-
-		/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-		for (const { attributes: author } of article.authors.data) {
-			authors.push({
-				avatar: author.avatar,
-				name: author.name,
-				url: author.url,
-			});
-		}
-
-		articles.push({
-			slug: article.slug,
-			title: article.title,
-			summary: article.summary,
-			image: article.image,
-			createdAt: article.createdAt,
-			publishedAt: article.publishedAt ?? undefined,
-			readTime: article.readTime,
-			authors,
-		});
-		/* eslint-enable @typescript-eslint/no-unsafe-assignment */
+export const loader: LoaderFunction = async ({ context }: DataFunctionArgs) => {
+	const data = await context.KV.get<Article[]>('articles', 'json');
+	if (data === null) {
+		return json([]);
 	}
 
-	return articles;
+	return json(data);
 };
 
 const IS_BLOG_POST_REGEXP = /^\/blog\/.+/i;

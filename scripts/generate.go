@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"text/template"
 	"time"
 
 	"gopkg.in/yaml.v2"
@@ -71,60 +70,16 @@ type Author struct {
 // }
 
 func main() {
-	if err := os.RemoveAll("app/generated"); err != nil {
-		panic(err)
-		return
-	}
-	if err := os.RemoveAll("app/routes/blog"); err != nil {
-		panic(err)
-		return
-	}
-	if err := os.Mkdir("app/generated", 0755); err != nil {
-		panic(err)
-		return
-	}
-	if err := os.Mkdir("app/routes/blog", 0755); err != nil {
+	if err := os.RemoveAll("scripts/generated"); err != nil {
 		panic(err)
 		return
 	}
 
-	tmpl, err := template.New("generate").Parse(`//
-// Copyright (c) 2021 Matthew Penner
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.
-//
-
-import { generateBlogPost } from '~/components/Blog/generateBlogPost';
-
-import * as Content from '~/generated/{{ .Slug }}.mdx';
-
-const BlogPost = generateBlogPost(Content);
-
-export const meta = BlogPost.meta;
-export default BlogPost.default;
-`)
-	if err != nil {
+	if err := os.Mkdir("scripts/generated", 0755); err != nil {
 		panic(err)
 		return
 	}
 
-	// populate[authors][populate]=avatar
 	req, err := http.NewRequest("GET", "https://strapi.matthewp.io/api/articles?populate=authors&sort[0]=createdAt:desc", nil)
 	if err != nil {
 		panic(err)
@@ -161,7 +116,7 @@ export default BlogPost.default;
 			panic(err)
 			return
 		}
-		f, err := os.OpenFile(filepath.Join("app", "generated", a.Attributes.Slug+".mdx"), os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0644)
+		f, err := os.OpenFile(filepath.Join("scripts", "generated", a.Attributes.Slug+".mdx"), os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0644)
 		if err != nil {
 			panic(err)
 			return
@@ -173,27 +128,10 @@ export default BlogPost.default;
 		}
 		_ = f.Close()
 
-		component, err := getComponentContent(tmpl, a.Attributes)
-		if err != nil {
-			panic(err)
-			return
-		}
-		f, err = os.OpenFile(filepath.Join("app", "routes", "blog", a.Attributes.Slug+".tsx"), os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0644)
-		if err != nil {
-			panic(err)
-			return
-		}
-		if _, err := f.Write(component); err != nil {
-			fmt.Printf("failed to write to file: %v\n", err)
-			os.Exit(1)
-			return
-		}
-		_ = f.Close()
-
 		data.Data[i].Attributes.Content = ""
 	}
 
-	f, err := os.OpenFile("app/generated/articles.json", os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0644)
+	f, err := os.OpenFile("scripts/generated/articles.json", os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0644)
 	if err != nil {
 		panic(err)
 		return
@@ -256,13 +194,5 @@ func getFileContent(article Article) ([]byte, error) {
 	b.Write([]byte("---\n\n"))
 	b.WriteString(article.Content)
 
-	return b.Bytes(), nil
-}
-
-func getComponentContent(tmpl *template.Template, article Article) ([]byte, error) {
-	b := &bytes.Buffer{}
-	if err := tmpl.Execute(b, article); err != nil {
-		return nil, err
-	}
 	return b.Bytes(), nil
 }

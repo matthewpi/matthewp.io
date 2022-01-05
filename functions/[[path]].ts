@@ -26,14 +26,21 @@ import type { ServerBuild } from '@remix-run/server-runtime';
 // @ts-expect-error Remix
 import * as build from '../build';
 
-export interface Env {
-	KV: KVNamespace;
-}
+import type { LoadContext } from '~/types';
 
-const handleRequest = createPagesFunctionHandler({
-	build: build as unknown as ServerBuild,
-});
-
-export async function onRequest(context: EventContext<Env, any, any>): Promise<Response> {
-	return handleRequest(context);
+export async function onRequest(context: EventContext<LoadContext, any, any>): Promise<Response> {
+	return createPagesFunctionHandler({
+		build: build as unknown as ServerBuild,
+		getLoadContext: (context: EventContext<LoadContext, any, any>): LoadContext => {
+			return {
+				/* eslint-disable @typescript-eslint/naming-convention */
+				KV: context.env.KV,
+				// @ts-expect-error Replaced by esbuild
+				SECRET_POST_API_KEY: (context.env.POST_API_KEY as string) ?? 'abc',
+				// @ts-expect-error Replaced by esbuild
+				SECRET_WEBHOOK_API_KEY: (context.env.WEBHOOK_API_KEY as string) ?? 'abc',
+				/* eslint-enable @typescript-eslint/naming-convention */
+			};
+		},
+	})(context);
 }

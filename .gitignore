@@ -62,5 +62,6 @@ yarn-error.log
 # Miniflare
 /.mf
 
+/.env
 /build
 /public/build

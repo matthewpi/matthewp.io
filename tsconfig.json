@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"lib": ["DOM", "DOM.Iterable", "ES2021"],
+		"types": ["@cloudflare/workers-types"],
 		"baseUrl": ".",
 		"jsx": "react-jsx",
 		"target": "ES2021",
@@ -31,5 +32,12 @@
 		"stripInternal": true,
 		"useDefineForClassFields": true
 	},
-	"include": ["remix.env.d.ts", "app/**/*.d.ts", "app/**/*.ts", "app/**/*.tsx", "app/**/*.mdx"]
+	"include": [
+		"remix.env.d.ts",
+		"app/**/*.d.ts",
+		"app/**/*.ts",
+		"app/**/*.tsx",
+		"app/**/*.mdx",
+		"functions/**/*.ts"
+	]
 }

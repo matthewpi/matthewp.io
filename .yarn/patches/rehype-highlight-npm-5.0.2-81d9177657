@@ -7,7 +7,7 @@ index f9acbc93a566cd42c3eca762e16b35f9e585df82..fecd9024513901ae607a8ee4283c9f97
          node.children = result.children
        }
 +
-+      if (node.data.meta) {
++      if ('data' in node && 'meta' in node.data && typeof node.data.meta === 'string') {
 +        const properties = {}
 +
 +        let key = []
