@@ -38,7 +38,6 @@ import rehypeHighlight from 'rehype-highlight';
 (async function () {
 	const postUrl = process.env.POST_URL ?? 'http://127.0.0.1:8788';
 	const postApiKey = process.env.POST_API_KEY;
-	console.log(JSON.stringify({ postUrl, postApiKey }), undefined, '\t');
 	const [basePath] = process.argv.slice(2);
 	const generatedPath = path.join(basePath, 'scripts', 'generated');
 	const mdxPaths = await fsp.readdir(generatedPath);

@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16
-          cache: yarn
+          cache: yarn2
 
       - name:  Install Dependencies
         run: yarn install --immutable
@@ -27,4 +27,7 @@ jobs:
         run: yarn run generate
 
       - name:  Compile and Publish MDX
+        env:
+          POST_API_KEY: ${{ secrets.POST_API_KEY }}
+          POST_URL: ${{ secrets.POST_URL }}
         run: node scripts/compile-mdx.mjs .
