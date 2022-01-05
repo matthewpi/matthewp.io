@@ -35,6 +35,8 @@ const handleRequest = createPagesFunctionHandler({
 });
 
 export async function onRequest(context: EventContext<Env, any, any>): Promise<Response> {
+	const ifNoneMatch = context.request.headers.get('if-none-match');
+
 	return handleRequest({
 		...context,
 		env: {
@@ -50,24 +52,15 @@ export async function onRequest(context: EventContext<Env, any, any>): Promise<R
 								request: Request | string,
 								requestInitr?: RequestInit | Request,
 						  ) => {
-								let response = await context.env.ASSETS.fetch(
-									request,
-									requestInitr,
-								);
-								if (response.ok) {
-									response = new Response(
-										[101, 204, 205, 304].includes(response.status)
-											? null
-											: response.body,
-										response,
-									);
-									response.headers.set(
-										'cache-control',
-										'public, max-age=31536000, immutable',
-									);
+								if (
+									typeof request !== 'string' &&
+									ifNoneMatch !== null &&
+									!request.headers.has('if-none-match')
+								) {
+									request.headers.set('if-none-match', ifNoneMatch);
 								}
 
-								return response;
+								return await context.env.ASSETS.fetch(request, requestInitr);
 						  }
 						: context.env.ASSETS.fetch,
 			},
