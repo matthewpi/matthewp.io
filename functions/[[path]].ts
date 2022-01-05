@@ -35,5 +35,42 @@ const handleRequest = createPagesFunctionHandler({
 });
 
 export async function onRequest(context: EventContext<Env, any, any>): Promise<Response> {
-	return handleRequest(context);
+	return handleRequest({
+		...context,
+		env: {
+			...context.env,
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			ASSETS: {
+				...context.env.ASSETS,
+				fetch:
+					// @ts-expect-error NODE_ENV gets replaced, it shouldn't be accessed by an index signature.
+					// eslint-disable-next-line node/prefer-global/process
+					process.env.NODE_ENV === 'production'
+						? async (
+								request: Request | string,
+								requestInitr?: RequestInit | Request,
+						  ) => {
+								let response = await context.env.ASSETS.fetch(
+									request,
+									requestInitr,
+								);
+								if (response.ok) {
+									response = new Response(
+										[101, 204, 205, 304].includes(response.status)
+											? null
+											: response.body,
+										response,
+									);
+									response.headers.set(
+										'cache-control',
+										'public, max-age=31536000, immutable',
+									);
+								}
+
+								return response;
+						  }
+						: context.env.ASSETS.fetch,
+			},
+		},
+	});
 }
