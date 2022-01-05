@@ -1,0 +1,30 @@
+name: "Compile MDX"
+
+on:
+  repository_dispatch:
+
+jobs:
+  compile-mdx:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name:  Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name:  Code Checkout
+        uses: actions/checkout@v2
+
+      - name:  Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: yarn
+
+      - name:  Install Dependencies
+        run: yarn install --immutable
+
+      - name:  Generate MDX
+        run: yarn run generate
+
+      - name:  Compile and Publish MDX
+        run: node scripts/compile-mdx.mjs .

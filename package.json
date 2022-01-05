@@ -100,6 +100,7 @@
 		],
 		"prettier": true,
 		"rules": {
+			"@typescript-eslint/no-throw-literal": 0,
 			"capitalized-comments": 1,
 			"import/extensions": 0,
 			"no-negated-condition": 1,

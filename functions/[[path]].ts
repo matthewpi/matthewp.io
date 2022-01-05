@@ -36,9 +36,9 @@ export async function onRequest(context: EventContext<LoadContext, any, any>): P
 				/* eslint-disable @typescript-eslint/naming-convention */
 				KV: context.env.KV,
 				// @ts-expect-error Replaced by esbuild
-				SECRET_POST_API_KEY: (context.env.POST_API_KEY as string) ?? 'abc',
+				SECRET_POST_API_KEY: (context.env.POST_API_KEY as string) ?? '',
 				// @ts-expect-error Replaced by esbuild
-				SECRET_WEBHOOK_API_KEY: (context.env.WEBHOOK_API_KEY as string) ?? 'abc',
+				SECRET_WEBHOOK_API_KEY: (context.env.WEBHOOK_API_KEY as string) ?? '',
 				/* eslint-enable @typescript-eslint/naming-convention */
 			};
 		},

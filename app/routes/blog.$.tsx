@@ -71,19 +71,19 @@ export const links: LinksFunction = () => {
 export const loader: LoaderFunction = async ({ context, params, request }: DataFunctionArgs) => {
 	const slug = params['*'];
 	if (slug === undefined) {
-		return new Response('Not Found', { status: 404 });
+		throw new Response('Not Found', { status: 404 });
 	}
 
 	const data = await context.KV.get<BlogContentType>(`article/${slug}`, 'json');
 	if (data === null) {
-		return new Response('Not Found', { status: 404 });
+		throw new Response('Not Found', { status: 404 });
 	}
 
 	const { frontmatter, html, code, hash } = data;
 
 	const etag = request.headers.get('If-None-Match');
 	if (etag === hash) {
-		return new Response('Not Modified', { status: 304 });
+		throw new Response('Not Modified', { status: 304 });
 	}
 
 	const headers = new Headers();
