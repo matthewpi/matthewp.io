@@ -75,6 +75,7 @@ export const loader: LoaderFunction = async () => {
 	for (const { attributes: article } of generatedArticles.data) {
 		const authors: Author[] = [];
 
+		/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 		for (const { attributes: author } of article.authors.data) {
 			authors.push({
 				avatar: author.avatar,
@@ -93,6 +94,7 @@ export const loader: LoaderFunction = async () => {
 			readTime: article.readTime,
 			authors,
 		});
+		/* eslint-enable @typescript-eslint/no-unsafe-assignment */
 	}
 
 	return articles;

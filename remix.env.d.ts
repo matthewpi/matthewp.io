@@ -42,7 +42,7 @@ declare module '*.css' {
 }
 
 declare module '*.json' {
-	const asset: string;
+	const asset: any;
 	export default asset;
 }
 

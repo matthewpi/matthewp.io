@@ -20,39 +20,40 @@
 // SOFTWARE.
 //
 
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import type { LinksFunction, MetaFunction } from 'remix';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch } from 'remix';
 import type { Blog, Brand, Person, WithContext } from 'schema-dts';
 
-import tailwind from '~/tailwind.css';
+import { ProgressBar } from '~/components/ProgressBar';
 import { ErrorPage } from '~/components/Error';
 import { Navigation } from '~/components/Navigation';
 import { MatthewPenner, MatthewPennerBlog, MatthewPennerBrand } from '~/data/schemas';
 import inter from '~/styles/inter.css';
+import tailwind from '~/tailwind.css';
 
 // https://remix.run/api/app#links
 export const links: LinksFunction = () => {
 	return [
 		{
 			rel: 'preload',
-			href: inter as string,
+			href: inter,
 			as: 'style',
 			type: 'text/css',
 		},
 		{
 			rel: 'stylesheet',
-			href: inter as string,
+			href: inter,
 		},
 		{
 			rel: 'preload',
-			href: tailwind as string,
+			href: tailwind,
 			as: 'style',
 			type: 'text/css',
 		},
 		{
 			rel: 'stylesheet',
-			href: tailwind as string,
+			href: tailwind,
 		},
 	];
 };
@@ -164,6 +165,8 @@ function Document({ children, title }: { children: ReactNode; title?: string }) 
 export default function App() {
 	return (
 		<Document>
+			<ProgressBar />
+
 			<div className="relative overflow-x-hidden">
 				<div className="h-full min-h-screen">
 					<div className="py-6 px-6 lg:px-8">

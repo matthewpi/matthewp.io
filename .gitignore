@@ -59,5 +59,8 @@ yarn-error.log
 #   Project Files   #
 #-------------------#
 
+# Miniflare
+/.mf
+
 /build
 /public/build
