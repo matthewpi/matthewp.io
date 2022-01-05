@@ -35,35 +35,5 @@ const handleRequest = createPagesFunctionHandler({
 });
 
 export async function onRequest(context: EventContext<Env, any, any>): Promise<Response> {
-	const ifNoneMatch = context.request.headers.get('if-none-match');
-
-	return handleRequest({
-		...context,
-		env: {
-			...context.env,
-			// eslint-disable-next-line @typescript-eslint/naming-convention
-			ASSETS: {
-				...context.env.ASSETS,
-				fetch:
-					// @ts-expect-error NODE_ENV gets replaced, it shouldn't be accessed by an index signature.
-					// eslint-disable-next-line node/prefer-global/process
-					process.env.NODE_ENV === 'production'
-						? async (
-								request: Request | string,
-								requestInitr?: RequestInit | Request,
-						  ) => {
-								if (
-									typeof request !== 'string' &&
-									ifNoneMatch !== null &&
-									!request.headers.has('if-none-match')
-								) {
-									request.headers.set('if-none-match', ifNoneMatch);
-								}
-
-								return await context.env.ASSETS.fetch(request, requestInitr);
-						  }
-						: context.env.ASSETS.fetch,
-			},
-		},
-	});
+	return handleRequest(context);
 }
