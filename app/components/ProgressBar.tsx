@@ -29,8 +29,8 @@ const randomInt = (low: number, high: number) => {
 };
 
 export function ProgressBar() {
-	const interval = useRef<NodeJS.Timeout>();
-	const timeout = useRef<NodeJS.Timeout>();
+	const interval = useRef<number>();
+	const timeout = useRef<number>();
 
 	const [continuous, setContinuous] = useState<boolean>(false);
 	const [progress, setProgress] = useState<number>();
