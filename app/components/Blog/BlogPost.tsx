@@ -20,36 +20,14 @@
 // SOFTWARE.
 //
 
-import { ComponentType } from 'react';
+import type { ComponentType } from 'react';
 
 import { Markdown, SmartLink } from '~/components/Markdown';
-
-interface Author {
-	avatar: string;
-	name: string;
-	url: string;
-}
-
-interface Attribution {
-	link: string;
-	name: string;
-}
-
-export interface Attributes {
-	slug: string;
-	title: string;
-	summary: string;
-	image: string;
-	imageAttribution?: Attribution;
-	publishedAt: string;
-	updatedAt: string;
-	readTime?: string;
-	authors: Author[];
-}
+import { Article } from '~/types';
 
 interface BlogPostProps {
 	Component: ComponentType;
-	attributes: Attributes;
+	attributes: Article;
 }
 
 export function BlogPost({ Component, attributes: article }: BlogPostProps) {
@@ -80,11 +58,14 @@ export function BlogPost({ Component, attributes: article }: BlogPostProps) {
 
 				<div className="flex flex-col sm:flex-row mt-6">
 					<p className="whitespace-nowrap text-slate-500 mr-4">
-						{new Date(article.publishedAt).toLocaleDateString('en-CA', {
-							year: 'numeric',
-							month: 'long',
-							day: 'numeric',
-						})}
+						{new Date(article.publishedAt ?? article.createdAt).toLocaleDateString(
+							'en-CA',
+							{
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric',
+							},
+						)}
 					</p>
 
 					{article.authors.length > 0 ? (

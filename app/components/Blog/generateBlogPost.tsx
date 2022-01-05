@@ -23,12 +23,12 @@
 import type { ComponentType } from 'react';
 import type { HtmlMetaDescriptor, MetaFunction } from 'remix';
 
-import type { Attributes } from './BlogPost';
 import { BlogPost } from './BlogPost';
+import type { Article } from '~/types';
 
 interface BlogPostComponent {
 	default: ComponentType;
-	attributes: Attributes;
+	attributes: Article;
 }
 
 export function generateBlogPost({ default: Component, attributes }: BlogPostComponent) {

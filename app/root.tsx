@@ -73,6 +73,7 @@ export const meta: MetaFunction = () => {
 // https://remix.run/docs/en/v1/api/conventions#errorboundary
 export function ErrorBoundary({ error }: { error: Error }) {
 	console.error(error);
+
 	return (
 		<Document title="418 I'm a Teapot">
 			<ErrorPage
@@ -110,7 +111,7 @@ export function CatchBoundary() {
 
 function Document({ children, title }: { children: ReactNode; title?: string }) {
 	return (
-		<html lang="en">
+		<html suppressHydrationWarning lang="en">
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />

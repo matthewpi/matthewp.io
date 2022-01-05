@@ -18,7 +18,7 @@
 		"tailwind:dev": "yarn run tailwind:_build --watch",
 		"//5": "All the things",
 		"clean": "rimraf build public/build",
-		"build": "yarn run generate && yarn run tailwind:build && yarn run remix:build",
+		"build": "yarn run tailwind:build && yarn run remix:build",
 		"dev": "concurrently \"yarn run tailwind:dev\" \"yarn run remix:watch\" \"yarn run worker:start\"",
 		"//6": "Code Generation",
 		"generate": "./scripts/generate"
@@ -32,6 +32,7 @@
 		"copy-to-clipboard": "3.3.1",
 		"highlight.js": "11.3.1",
 		"html-entities": "2.3.2",
+		"mdx-bundler": "8.0.1",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
 		"rehype-highlight": "5.0.2",
@@ -58,11 +59,12 @@
 		"eslint-plugin-react-hooks": "4.3.0",
 		"husky": "7.0.4",
 		"lint-staged": "12.1.5",
+		"postcss": "8.4.5",
 		"prettier": "2.5.1",
 		"rimraf": "3.0.2",
-		"tailwindcss": "3.0.10",
+		"tailwindcss": "3.0.11",
 		"typescript": "4.5.4",
-		"wrangler": "pages",
+		"wrangler": "alpha",
 		"xo": "0.47.0"
 	},
 	"lint-staged": {
@@ -98,7 +100,10 @@
 		],
 		"prettier": true,
 		"rules": {
+			"@typescript-eslint/no-throw-literal": 0,
+			"capitalized-comments": 1,
 			"import/extensions": 0,
+			"no-negated-condition": 1,
 			"react/react-in-jsx-scope": 0,
 			"unicorn/filename-case": 0
 		},

@@ -32,18 +32,6 @@ const config = {
 	serverModuleFormat: 'esm',
 	serverPlatform: 'neutral',
 	ignoredRouteFiles: ['.*'],
-
-	mdx: async () => {
-		const [rehypeHighlight] = await Promise.all([
-			/* eslint-disable node/no-unsupported-features/es-syntax */
-			import('rehype-highlight').then(mod => mod.default),
-			/* eslint-enable node/no-unsupported-features/es-syntax */
-		]);
-
-		return {
-			rehypePlugins: [rehypeHighlight],
-		};
-	},
 };
 
 // eslint-disable-next-line unicorn/prefer-module
