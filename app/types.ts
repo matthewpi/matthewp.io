@@ -37,8 +37,10 @@ export interface Article {
 }
 
 export interface Attribution {
-	link: string;
-	name: string;
+	platform: string;
+	platformUrl: string;
+	author: string;
+	authorUrl: string;
 }
 
 export interface Author {

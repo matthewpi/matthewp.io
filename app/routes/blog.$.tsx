@@ -79,7 +79,7 @@ export const loader: LoaderFunction = async ({ context, params, request }: DataF
 		throw new Response('Not Found', { status: 404 });
 	}
 
-	const { frontmatter, html, code, hash } = data;
+	const { frontmatter, code, hash } = data;
 
 	const etag = request.headers.get('If-None-Match');
 	if (etag === hash) {
@@ -95,7 +95,6 @@ export const loader: LoaderFunction = async ({ context, params, request }: DataF
 		{
 			code,
 			frontmatter,
-			html,
 			slug,
 		} as LoaderData,
 		{ headers },
@@ -103,7 +102,7 @@ export const loader: LoaderFunction = async ({ context, params, request }: DataF
 };
 
 export default function Post() {
-	const { code, frontmatter, html } = useLoaderData<LoaderData>();
+	const { code, frontmatter } = useLoaderData<LoaderData>();
 
 	let Component;
 	if (typeof window !== 'undefined' && code !== undefined) {
@@ -124,12 +123,20 @@ export default function Post() {
 				<figure className="mt-6">
 					<img src={frontmatter.image} className="w-full rounded-lg" alt="" />
 					{frontmatter.imageAttribution === undefined ? null : (
-						<figcaption className="text-center mt-2">
+						<figcaption className="text-sm text-center mt-2 text-slate-500 dark:text-slate-600">
+							Photo by{' '}
 							<SmartLink
-								href={frontmatter.imageAttribution.link}
-								className="text-slate-400 hover:text-slate-600 dark:text-slate-600 dark:hover:text-slate-400"
+								href={frontmatter.imageAttribution.authorUrl}
+								className="text-slate-600 hover:text-slate-800 dark:text-slate-500 dark:hover:text-slate-300"
 							>
-								{frontmatter.imageAttribution.name}
+								{frontmatter.imageAttribution.author}
+							</SmartLink>{' '}
+							on{' '}
+							<SmartLink
+								href={frontmatter.imageAttribution.platformUrl}
+								className="text-slate-600 hover:text-slate-800 dark:text-slate-500 dark:hover:text-slate-300"
+							>
+								{frontmatter.imageAttribution.platform}
 							</SmartLink>
 						</figcaption>
 					)}
@@ -161,13 +168,7 @@ export default function Post() {
 				</div>
 			</div>
 
-			{Component === undefined ? (
-				<article
-					className="mt-4 sm:mt-6 prose prose-lg dark:prose-invert mx-auto"
-					// eslint-disable-next-line react/no-danger
-					dangerouslySetInnerHTML={{ __html: html }}
-				/>
-			) : (
+			{Component === undefined ? null : (
 				<article className="mt-4 sm:mt-6 prose prose-lg dark:prose-invert mx-auto">
 					<Markdown contents={Component} />
 				</article>

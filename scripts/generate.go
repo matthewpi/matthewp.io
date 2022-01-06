@@ -37,6 +37,7 @@ type Article struct {
 	Authors     Array[Author] `json:"authors"`
 	Image       string        `json:"image"`
 	ReadTime    string        `json:"readTime,omitempty"`
+	ImageAttribution *ImageAttribution `json:"imageAttribution,omitempty"`
 }
 
 type Author struct {
@@ -46,6 +47,13 @@ type Author struct {
 	UpdatedAt time.Time `json:"updatedAt"`
 	Avatar    string    `json:"avatar"`
 	// 	Avatar    Item[Media] `json:"avatar"`
+}
+
+type ImageAttribution struct {
+	Author string `json:"author" yaml:"author"`
+	AuthorURL string `json:"authorUrl" yaml:"authorUrl"`
+	Platform string `json:"platform" yaml:"platform"`
+	PlatformURL string `json:"platformUrl" yaml:"platformUrl"`
 }
 
 // type Media struct {
@@ -80,7 +88,7 @@ func main() {
 		return
 	}
 
-	req, err := http.NewRequest("GET", "https://strapi.matthewp.io/api/articles?populate=authors&sort[0]=createdAt:desc", nil)
+	req, err := http.NewRequest("GET", "https://strapi.matthewp.io/api/articles?populate=authors&populate=imageAttribution&sort[0]=createdAt:desc", nil)
 	if err != nil {
 		panic(err)
 		return
@@ -148,6 +156,7 @@ type Metadata struct {
 	Title       string           `yaml:"title"`
 	Summary     string           `yaml:"summary"`
 	Image       string           `yaml:"image"`
+	ImageAttribution *ImageAttribution `yaml:"imageAttribution,omitempty"`
 	PublishedAt time.Time        `yaml:"publishedAt"`
 	UpdatedAt   time.Time        `yaml:"updatedAt"`
 	ReadTime    string           `yaml:"readTime,omitempty"`
@@ -184,6 +193,7 @@ func getFileContent(article Article) ([]byte, error) {
 		Title:       article.Title,
 		Summary:     article.Summary,
 		Image:       article.Image,
+		ImageAttribution: article.ImageAttribution,
 		PublishedAt: publishedAt,
 		UpdatedAt:   article.UpdatedAt,
 		ReadTime:    article.ReadTime,
