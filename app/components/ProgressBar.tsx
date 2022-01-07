@@ -39,16 +39,6 @@ export function ProgressBar() {
 	const { state } = useTransition();
 
 	useEffect(() => {
-		if (state !== 'idle') {
-			setContinuous(true);
-			return;
-		}
-
-		setContinuous(false);
-		setProgress(previous => (previous === undefined ? undefined : 100));
-	}, [state]);
-
-	useEffect(() => {
 		return () => {
 			if (timeout.current) {
 				clearTimeout(timeout.current);
@@ -68,7 +58,7 @@ export function ProgressBar() {
 				setProgress(undefined);
 			}, 500);
 		}
-	}, [progress, setProgress]);
+	}, [progress]);
 
 	useEffect(() => {
 		if (!continuous) {
@@ -82,7 +72,7 @@ export function ProgressBar() {
 		if (progress === undefined || progress === 0) {
 			setProgress(randomInt(1, 5));
 		}
-	}, [continuous, progress, setProgress]);
+	}, [continuous, progress]);
 
 	useEffect(() => {
 		if (!continuous) {
@@ -100,7 +90,25 @@ export function ProgressBar() {
 				setProgress((progress ?? 0) + randomInt(1, 5));
 			}, 333);
 		}
-	}, [continuous, progress, setProgress]);
+	}, [continuous, progress]);
+
+	useEffect(() => {
+		console.log(state);
+		if (state !== 'idle') {
+			if (!continuous) {
+				setContinuous(true);
+			}
+
+			return;
+		}
+
+		if (!continuous) {
+			return;
+		}
+
+		setContinuous(false);
+		setProgress(previous => (previous === undefined ? undefined : 100));
+	}, [state]);
 
 	return (
 		<div className="h-[2px] fixed z-10 w-full">
