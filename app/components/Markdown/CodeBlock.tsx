@@ -63,13 +63,13 @@ export function CodeBlock({
 
 	return (
 		<div
-			className={`bg-slate-800 rounded-xl dark:ring-1 dark:ring-inset dark:ring-white/10 transition-all motion-reduce:transition-none delay-50 duration-300 ease-in-out -mx-4 ${
+			className={`bg-slate-800 rounded-xl transition-all motion-reduce:transition-none delay-50 duration-300 ease-in-out -mx-4 shadow-lg dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/10 ${
 				expanded ? 'lg:-mx-24 xl:-mx-52 2xl:-mx-72' : 'md:mx-0'
 			}`}
 		>
 			<div className="text-blue-300 flex items-center border-b border-white/10">
 				{label ? (
-					<div className="flex items-center px-5 py-3 text-sm border-b border-blue-400 break-all">
+					<div className="flex items-center px-4 py-3 text-sm border-b border-blue-400 break-all">
 						{label}
 					</div>
 				) : undefined}
