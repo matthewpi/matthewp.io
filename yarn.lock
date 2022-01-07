@@ -1000,6 +1000,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/tailwindcss@npm:3.0.2":
+  version: 3.0.2
+  resolution: "@types/tailwindcss@npm:3.0.2"
+  checksum: 2e5be8f465ee57407bda3b49d64bda3a801ef946a815ea9affbae506517968fc584996a17a3d9c8fb712e73e855e91375ad11ca17d0e099f6bab0013c246dce3
+  languageName: node
+  linkType: hard
+
 "@types/unist@npm:*, @types/unist@npm:^2.0.0":
   version: 2.0.6
   resolution: "@types/unist@npm:2.0.6"
@@ -5512,6 +5519,7 @@ __metadata:
     "@tailwindcss/typography": 0.5.0
     "@types/react": 17.0.38
     "@types/react-dom": 17.0.11
+    "@types/tailwindcss": 3.0.2
     autoprefixer: 10.4.1
     concurrently: 7.0.0
     copy-to-clipboard: 3.3.1

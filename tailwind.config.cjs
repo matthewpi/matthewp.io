@@ -20,16 +20,19 @@
 // SOFTWARE.
 //
 
-const defaultTheme = require('tailwindcss/defaultTheme');
+const { fontFamily } = require('tailwindcss/defaultTheme');
 
-module.exports = {
-	content: ['./app/**/*.{mdx,ts,tsx}'],
+/**
+ * @type {import('@types/tailwindcss').TailwindConfig}
+ */
+const config = {
+	content: ['./app/**/*.{mdx,tsx}'],
 
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-				mono: ['Hack', ...defaultTheme.fontFamily.mono],
+				sans: ['Inter var', ...fontFamily.sans],
+				mono: ['Hack', ...fontFamily.mono],
 			},
 
 			typography: theme => ({
@@ -80,3 +83,5 @@ module.exports = {
 		require('@tailwindcss/typography'),
 	],
 };
+
+module.exports = config;
