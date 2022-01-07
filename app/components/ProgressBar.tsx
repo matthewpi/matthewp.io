@@ -93,7 +93,6 @@ export function ProgressBar() {
 	}, [continuous, progress]);
 
 	useEffect(() => {
-		console.log(state);
 		if (state !== 'idle') {
 			if (!continuous) {
 				setContinuous(true);

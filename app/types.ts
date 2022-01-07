@@ -54,6 +54,8 @@ export interface LoadContext {
 
 	SECRET_POST_API_KEY: string;
 	SECRET_WEBHOOK_API_KEY: string;
+
+	waitUntil: (promise: Promise<any>) => void;
 }
 
 export type DataFunctionArgs = Except<RemixDataFunctionArgs, 'context'> & { context: LoadContext };

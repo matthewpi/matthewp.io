@@ -28,19 +28,22 @@ import * as build from '../build';
 
 import type { LoadContext } from '~/types';
 
-export async function onRequest(context: EventContext<LoadContext, any, any>): Promise<Response> {
+export async function onRequest(event: EventContext<LoadContext, any, any>): Promise<Response> {
 	return createPagesFunctionHandler({
 		build: build as unknown as ServerBuild,
-		getLoadContext: (context: EventContext<LoadContext, any, any>): LoadContext => {
+		getLoadContext: (event: EventContext<LoadContext, any, any>): LoadContext => {
 			return {
 				/* eslint-disable @typescript-eslint/naming-convention */
-				KV: context.env.KV,
+				KV: event.env.KV,
+
 				// @ts-expect-error Replaced by esbuild
-				SECRET_POST_API_KEY: (context.env.POST_API_KEY as string) ?? '',
+				SECRET_POST_API_KEY: (event.env.POST_API_KEY as string) ?? '',
 				// @ts-expect-error Replaced by esbuild
-				SECRET_WEBHOOK_API_KEY: (context.env.WEBHOOK_API_KEY as string) ?? '',
+				SECRET_WEBHOOK_API_KEY: (event.env.WEBHOOK_API_KEY as string) ?? '',
 				/* eslint-enable @typescript-eslint/naming-convention */
+
+				waitUntil: event.waitUntil,
 			};
 		},
-	})(context);
+	})(event);
 }

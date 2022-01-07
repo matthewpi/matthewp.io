@@ -25,13 +25,29 @@ import { Link, Outlet, useLoaderData, useMatches, json } from 'remix';
 
 import type { Article, DataFunctionArgs } from '~/types';
 
-export const loader: LoaderFunction = async ({ context }: DataFunctionArgs) => {
-	const data = await context.KV.get<Article[]>('articles', 'json');
+export const loader: LoaderFunction = async ({
+	context: { KV, waitUntil },
+	request,
+}: DataFunctionArgs) => {
+	// @ts-expect-error TypeScript and Cloudflare have an overlapping declaration name.
+	const cache = caches.default as Cache;
+	let response = await cache.match(request);
+	if (response !== undefined) {
+		return response;
+	}
+
+	const data = await KV.get<Article[]>('articles', 'json');
 	if (data === null) {
 		return json([]);
 	}
 
-	return json(data);
+	response = json(data);
+
+	const cachedResponse = response.clone();
+	cachedResponse.headers.append('Cache-Control', 'public, max-age=300, s-maxage=30');
+	waitUntil(cache.put(request, cachedResponse));
+
+	return response;
 };
 
 const IS_BLOG_POST_REGEXP = /^\/blog\/.+/i;

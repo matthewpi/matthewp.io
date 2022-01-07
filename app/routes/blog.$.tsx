@@ -68,13 +68,24 @@ export const links: LinksFunction = () => {
 	];
 };
 
-export const loader: LoaderFunction = async ({ context, params, request }: DataFunctionArgs) => {
+export const loader: LoaderFunction = async ({
+	context: { KV, waitUntil },
+	params,
+	request,
+}: DataFunctionArgs) => {
+	// @ts-expect-error TypeScript and Cloudflare have an overlapping declaration name.
+	const cache = caches.default as Cache;
+	let response = await cache.match(request);
+	if (response !== undefined) {
+		return response;
+	}
+
 	const slug = params['*'];
 	if (slug === undefined) {
 		throw new Response('Not Found', { status: 404 });
 	}
 
-	const data = await context.KV.get<BlogContentType>(`article/${slug}`, 'json');
+	const data = await KV.get<BlogContentType>(`article/${slug}`, 'json');
 	if (data === null) {
 		throw new Response('Not Found', { status: 404 });
 	}
@@ -91,7 +102,7 @@ export const loader: LoaderFunction = async ({ context, params, request }: DataF
 		headers.append('ETag', hash);
 	}
 
-	return json(
+	response = json(
 		{
 			code,
 			frontmatter,
@@ -99,6 +110,12 @@ export const loader: LoaderFunction = async ({ context, params, request }: DataF
 		} as LoaderData,
 		{ headers },
 	);
+
+	const cachedResponse = response.clone();
+	cachedResponse.headers.append('Cache-Control', 'public, max-age=300, s-maxage=30');
+	waitUntil(cache.put(request, cachedResponse));
+
+	return response;
 };
 
 export default function Post() {
