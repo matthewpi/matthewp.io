@@ -125,6 +125,7 @@
 		]
 	},
 	"resolutions": {
-		"rehype-highlight@5.0.2": "patch:rehype-highlight@npm:5.0.2#.yarn/patches/rehype-highlight-npm-5.0.2-81d9177657"
+		"rehype-highlight@5.0.2": "patch:rehype-highlight@npm:5.0.2#.yarn/patches/rehype-highlight-npm-5.0.2-81d9177657",
+		"miniflare": "2.0.0"
 	}
 }
