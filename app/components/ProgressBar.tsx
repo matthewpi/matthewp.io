@@ -108,7 +108,7 @@ export function ProgressBar() {
 
 		setContinuous(false);
 		setProgress(previous => (previous === undefined ? undefined : 100));
-	}, [state]);
+	}, [state, continuous]);
 
 	return (
 		<div className="h-[2px] fixed z-10 w-full">
