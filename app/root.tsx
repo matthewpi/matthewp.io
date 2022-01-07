@@ -121,7 +121,7 @@ function Document({ children, title }: { children: ReactNode; title?: string }) 
 				<Links />
 				{title ? <title>{title}</title> : null}
 			</head>
-			<body>
+			<body className="min-h-screen bg-white dark:bg-slate-900">
 				{children}
 				<ScrollRestoration />
 				<Scripts />
