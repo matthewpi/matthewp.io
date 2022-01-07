@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2021 Matthew Penner
+// Copyright (c) 2022 Matthew Penner
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -162,9 +162,9 @@ const MatthewPennerBlog: Blog = {
 		'@type': 'Person',
 		'@id': MatthewPenner['@id'],
 	},
-	copyrightNotice: 'Copyright © 2021 Matthew Penner.  All rights reserved.',
-	copyrightYear: 2021,
-	creditText: 'Copyright © 2021 Matthew Penner.  All rights reserved.',
+	copyrightNotice: 'Copyright © 2022 Matthew Penner.  All rights reserved.',
+	copyrightYear: 2022,
+	creditText: 'Copyright © 2022 Matthew Penner.  All rights reserved.',
 	editor: {
 		'@type': 'Person',
 		'@id': MatthewPenner['@id'],
