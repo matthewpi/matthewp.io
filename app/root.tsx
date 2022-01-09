@@ -66,7 +66,7 @@ export const meta: MetaFunction = () => {
 		description: 'Nerd',
 		'og:site_name': 'Matthew Penner',
 		'og:description': 'Nerd',
-		'og:image': 'https://matthewp.io/icon.svg',
+		'og:image': 'https://matthewp.io/icon.png',
 		'og:url': 'https://matthewp.io',
 		'og:type': 'website',
 	};
