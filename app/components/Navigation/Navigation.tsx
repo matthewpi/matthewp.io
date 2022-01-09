@@ -27,11 +27,7 @@ import { Link, NavLink } from 'remix';
 
 import { Logo } from './Logo';
 
-const navigation = [
-	{ name: 'About', href: '/about' },
-	{ name: 'Projects', href: '/projects' },
-	{ name: 'Blog', href: '/blog' },
-];
+const navigation = [{ name: 'Blog', href: '/blog' }];
 
 export function Navigation() {
 	return (

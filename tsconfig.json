@@ -37,7 +37,6 @@
 		"app/**/*.d.ts",
 		"app/**/*.ts",
 		"app/**/*.tsx",
-		"app/**/*.mdx",
 		"functions/**/*.ts"
 	]
 }

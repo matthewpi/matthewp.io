@@ -20,6 +20,13 @@
 // SOFTWARE.
 //
 
+import { Markdown } from '~/components/Markdown';
+import About from '~/data/about.mdx';
+
 export default function Index() {
-	return <h1 className="text-slate-900 dark:text-slate-100 text-4xl">Soon&trade;</h1>;
+	return (
+		<div className="prose prose-lg dark:prose-invert mx-auto">
+			<Markdown contents={About} />
+		</div>
+	);
 }

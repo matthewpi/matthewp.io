@@ -46,6 +46,15 @@ declare module '*.json' {
 	export default asset;
 }
 
+declare module '*.mdx' {
+	import type { ComponentType as MdxComponentType } from 'react';
+
+	export const attributes: any;
+	export const filename: string;
+	const component: MdxComponentType;
+	export default component;
+}
+
 /// <reference types="@remix-run/dev" />
 /// <reference types="@remix-run/cloudflare-pages/globals" />
 /// <reference types="@cloudflare/workers-types" />
