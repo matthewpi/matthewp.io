@@ -37,9 +37,11 @@ export async function onRequest(event: EventContext<LoadContext, any, any>): Pro
 				KV: event.env.KV,
 
 				// @ts-expect-error Replaced by esbuild
-				SECRET_POST_API_KEY: (event.env.POST_API_KEY as string) ?? '',
+				SECRET_POST_API_KEY:
+					(event.env.POST_API_KEY as string) ?? (globalThis.MINIFLARE ? 'abc' : ''),
 				// @ts-expect-error Replaced by esbuild
-				SECRET_WEBHOOK_API_KEY: (event.env.WEBHOOK_API_KEY as string) ?? '',
+				SECRET_WEBHOOK_API_KEY:
+					(event.env.WEBHOOK_API_KEY as string) ?? (globalThis.MINIFLARE ? 'abc' : ''),
 				/* eslint-enable @typescript-eslint/naming-convention */
 
 				waitUntil: event.waitUntil,
