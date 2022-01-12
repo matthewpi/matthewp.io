@@ -193,7 +193,7 @@ export default function Post() {
 				</div>
 
 				{Component === undefined ? null : (
-					<article className="mt-4 sm:mt-6 prose prose-lg dark:prose-invert mx-auto">
+					<article className="mt-4 sm:mt-6 prose md:prose-lg dark:prose-invert mx-auto">
 						<Markdown contents={Component} />
 					</article>
 				)}

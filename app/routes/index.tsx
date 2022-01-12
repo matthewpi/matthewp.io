@@ -25,7 +25,7 @@ import About from '~/data/about.mdx';
 
 export default function Index() {
 	return (
-		<div className="prose prose-lg dark:prose-invert mx-auto">
+		<div className="prose md:prose-lg dark:prose-invert mx-auto">
 			<Markdown contents={About} />
 		</div>
 	);

@@ -203,7 +203,7 @@ export default function App() {
 						<Navigation />
 					</header>
 
-					<div className="pt-2 sm:pt-6 md:pt-8 lg:pt-10 px-4 sm:px-6 lg:px-8">
+					<div className="pt-4 sm:pt-6 md:pt-8 lg:pt-10 px-4 sm:px-6 lg:px-8">
 						<main className="relative max-w-7xl mx-auto pb-4 sm:pb-6 lg:pb-8">
 							<Outlet />
 						</main>
