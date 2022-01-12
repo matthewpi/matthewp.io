@@ -23,7 +23,7 @@
 import { Popover, Transition } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import { Fragment } from 'react';
-import { Link, NavLink } from 'remix';
+import { NavLink } from 'remix';
 
 import { Logo } from './Logo';
 
@@ -39,10 +39,10 @@ export function Navigation() {
 				>
 					<div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
 						<div className="flex items-center justify-between w-full md:w-auto">
-							<Link to="/">
+							<NavLink to="/">
 								<span className="sr-only">Matthew Penner</span>
 								<Logo className="h-8 sm:h-10" />
-							</Link>
+							</NavLink>
 							<div className="flex items-center -mr-2 md:hidden">
 								<Popover.Button className="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-slate-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
 									<span className="sr-only">Open main menu</span>
@@ -73,22 +73,26 @@ export function Navigation() {
 					className="absolute inset-x-0 top-0 z-10 p-2 transition origin-top-right transform md:hidden"
 				>
 					<div className="overflow-hidden rounded-lg shadow-md bg-white dark:bg-slate-900 ring-1 ring-opacity-5">
-						<div className="flex items-center justify-between px-5 pt-4">
-							<div>
-								<Popover.Button as={Fragment}>
-									<NavLink to="/">
-										<Logo className="w-auto h-8" />
-									</NavLink>
-								</Popover.Button>
-							</div>
+						<div className="flex flex-row-reverse items-center justify-between px-5 pt-4">
 							<div className="-mr-2">
 								<Popover.Button className="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-slate-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
 									<span className="sr-only">Close main menu</span>
 									<XIcon className="w-6 h-6" aria-hidden="true" />
 								</Popover.Button>
 							</div>
+							<div>
+								<Popover.Button
+									as={NavLink}
+									to="/"
+									onClick={() => {
+										close();
+									}}
+								>
+									<Logo className="w-auto h-8" />
+								</Popover.Button>
+							</div>
 						</div>
-						<div className="px-2 pt-2 pb-3 space-y-1">
+						<div className="px-2 pt-4 pb-3 space-y-1">
 							{navigation.map(item => (
 								<Popover.Button key={item.name} as={Fragment}>
 									<NavLink
