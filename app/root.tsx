@@ -34,7 +34,6 @@ import { MatthewPenner, MatthewPennerBlog, MatthewPennerBrand } from '~/data/sch
 import inter from '~/styles/inter.css';
 import tailwind from '~/tailwind.css';
 
-// https://remix.run/api/app#links
 export const links: LinksFunction = () => {
 	return [
 		{
@@ -57,22 +56,35 @@ export const links: LinksFunction = () => {
 			rel: 'stylesheet',
 			href: tailwind,
 		},
+		{
+			rel: 'icon',
+			href: '/icon-light.png',
+			type: 'image/png',
+			media: '(prefers-color-scheme: light)',
+		},
+		{
+			rel: 'icon',
+			href: '/icon-dark.png',
+			type: 'image/png',
+			media: '(prefers-color-scheme: dark)',
+		},
 	];
 };
 
 export const meta: MetaFunction = () => {
 	return {
 		title: 'Matthew Penner',
-		description: 'Nerd',
+		description: 'Software engineer with expertise in Go and TypeScript.',
+		keywords: 'Matthew Penner, matthewp.io, software developer, software engineer',
 		'og:site_name': 'Matthew Penner',
-		'og:description': 'Nerd',
+		'og:description': 'Software engineer with expertise in Go and TypeScript.',
 		'og:image': 'https://matthewp.io/icon.png',
 		'og:url': 'https://matthewp.io',
 		'og:type': 'website',
+		'theme-color': '#0284c7',
 	};
 };
 
-// https://remix.run/docs/en/v1/api/conventions#errorboundary
 export function ErrorBoundary({ error }: { error: Error }) {
 	console.error(error);
 
@@ -88,7 +100,6 @@ export function ErrorBoundary({ error }: { error: Error }) {
 	);
 }
 
-// https://remix.run/docs/en/v1/api/conventions#catchboundary
 export function CatchBoundary() {
 	const caught = useCatch();
 
