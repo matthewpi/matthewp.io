@@ -1,0 +1,7 @@
+https://matthewp-io.pages.dev/*
+	Link: https://matthewp.io/:splat; rel="canonical"
+	Refresh: 0; url=https://matthewp.io/:splat
+
+https://preview.matthewp.io/*
+	Link: https://matthewp.io/:splat; rel="canonical"
+	Refresh: 0; url=https://matthewp.io/:splat
