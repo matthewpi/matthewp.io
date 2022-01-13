@@ -1,7 +1,14 @@
-https://matthewp-io.pages.dev/*
+https://:project.pages.dev/*
 	Link: https://matthewp.io/:splat; rel="canonical"
 	Refresh: 0; url=https://matthewp.io/:splat
+	X-Robots-Tag: noindex
+
+https://:branch.:project.pages.dev/*
+	Link: https://matthewp.io/:splat; rel="canonical"
+	Refresh: 0; url=https://matthewp.io/:splat
+	X-Robots-Tag: noindex
 
 https://preview.matthewp.io/*
 	Link: https://matthewp.io/:splat; rel="canonical"
 	Refresh: 0; url=https://matthewp.io/:splat
+	X-Robots-Tag: noindex
