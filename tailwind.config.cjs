@@ -72,6 +72,19 @@ const config = {
 						'--tw-prose-invert-td-borders': theme('colors.slate[700]'),
 					},
 				},
+
+				lg: {
+					css: {
+						pre: {
+							marginTop: 0,
+							marginBottom: 0,
+							paddingTop: 0,
+							paddingRight: 0,
+							paddingBottom: 0,
+							paddingLeft: 0,
+						},
+					},
+				},
 			}),
 		},
 	},
