@@ -20,10 +20,19 @@
 // SOFTWARE.
 //
 
-import type { LoaderFunction } from 'remix';
+import type { LinksFunction, LoaderFunction, MetaFunction } from 'remix';
 import { Link, Outlet, useLoaderData, useMatches, json } from 'remix';
 
 import type { Article, DataFunctionArgs } from '~/types';
+
+export const links: LinksFunction = () => {
+	return [
+		{
+			rel: 'canonical',
+			href: 'https://matthewp.io/blog',
+		},
+	];
+};
 
 export const loader: LoaderFunction = async ({
 	context: { KV, waitUntil },
@@ -48,6 +57,13 @@ export const loader: LoaderFunction = async ({
 	waitUntil(cache.put(request, cachedResponse));
 
 	return response;
+};
+
+export const meta: MetaFunction = () => {
+	return {
+		title: 'Blog | Matthew Penner',
+		'og:title': 'Blog',
+	};
 };
 
 const IS_BLOG_POST_REGEXP = /^\/blog\/.+/i;

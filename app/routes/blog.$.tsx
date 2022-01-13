@@ -21,7 +21,7 @@
 //
 
 import stackOverflowDark from 'highlight.js/styles/stackoverflow-dark.css';
-import type { LinksFunction, LoaderFunction } from 'remix';
+import type { LinksFunction, LoaderFunction, MetaFunction } from 'remix';
 import { json, useLoaderData } from 'remix';
 
 import { Markdown, SmartLink } from '~/components/Markdown';
@@ -116,6 +116,24 @@ export const loader: LoaderFunction = async ({
 	waitUntil(cache.put(request, cachedResponse));
 
 	return response;
+};
+
+export const meta: MetaFunction = ({ data: _data }) => {
+	const data = _data as LoaderData;
+
+	return {
+		title: `${data.frontmatter.title} | Matthew Penner`,
+		'og:title': data.frontmatter.title,
+		'og:image': data.frontmatter.image,
+		'og:url': `https://matthewp.io/blog/${data.frontmatter.slug}`,
+		'og:type': 'article',
+		// TODO: Remix does not uses name instead of properties for these keys.
+		// 'article:published_time': data.frontmatter.publishedAt ?? '',
+		// 'article:modified_time': data.frontmatter.updatedAt ?? '',
+		// 'article:author:first_name': data.frontmatter.authors.map(author => author.name.split(' ', 2)?.[0] ?? ''),
+		// 'article:author:last_name': data.frontmatter.authors.map(author => author.name.split(' ', 2)?.pop() ?? ''),
+		// 'article:author:url': data.frontmatter.authors.map(author => author.url),
+	};
 };
 
 export default function Post() {

@@ -20,8 +20,19 @@
 // SOFTWARE.
 //
 
+import type { LinksFunction } from 'remix';
+
 import { Markdown } from '~/components/Markdown';
 import About from '~/data/about.mdx';
+
+export const links: LinksFunction = () => {
+	return [
+		{
+			rel: 'canonical',
+			href: 'https://matthewp.io',
+		},
+	];
+};
 
 export default function Index() {
 	return (
