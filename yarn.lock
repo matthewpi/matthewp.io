@@ -257,10 +257,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/workers-types@npm:3.3.0":
-  version: 3.3.0
-  resolution: "@cloudflare/workers-types@npm:3.3.0"
-  checksum: 0fe09b4ba7a0df038d9fb1c204c755237f7e822ca310de8334ec2218ada1eab4e220af3fa00afb561c29985a36e71e32f13fdff1e2cd4edc323cdb833df94a7a
+"@cloudflare/workers-types@npm:3.3.1":
+  version: 3.3.1
+  resolution: "@cloudflare/workers-types@npm:3.3.1"
+  checksum: 63ddbeddc5498f08e79033573eb1dbccacc735e83d6f2d10bbe38038d94b6d803fea39c8386f3b9a3da37e4aed1dfd87b9b8b66d447dd6f3b9b4561cb996b2c2
   languageName: node
   linkType: hard
 
@@ -5297,9 +5297,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lint-staged@npm:12.1.7":
-  version: 12.1.7
-  resolution: "lint-staged@npm:12.1.7"
+"lint-staged@npm:12.2.1":
+  version: 12.2.1
+  resolution: "lint-staged@npm:12.2.1"
   dependencies:
     cli-truncate: ^3.1.0
     colorette: ^2.0.16
@@ -5316,7 +5316,7 @@ __metadata:
     yaml: ^1.10.2
   bin:
     lint-staged: bin/lint-staged.js
-  checksum: 3d0757706c8b0ca3f004bb2ffa89a9d5fc97ccdebfa4cde29a9636c661538780e194b99cbc5e4b8b89b13986187b33c97e009b09014511bbd45ee05ba557d0eb
+  checksum: e75c70b3c5476d73475ec1a95847b67c2172005cfd6018e28876def7f46a6d329031d2441ad952e9b70a601b935040d2b5d67c058d3192bb997b1129913bb5e3
   languageName: node
   linkType: hard
 
@@ -5570,7 +5570,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "matthewp.io@workspace:."
   dependencies:
-    "@cloudflare/workers-types": 3.3.0
+    "@cloudflare/workers-types": 3.3.1
     "@headlessui/react": 1.4.3
     "@heroicons/react": 1.0.5
     "@remix-run/cloudflare-pages": 1.1.1
@@ -5597,7 +5597,7 @@ __metadata:
     highlight.js: 11.4.0
     html-entities: 2.3.2
     husky: 7.0.4
-    lint-staged: 12.1.7
+    lint-staged: 12.2.1
     mdx-bundler: 8.0.1
     postcss: 8.4.5
     prettier: 2.5.1
