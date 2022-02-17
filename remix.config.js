@@ -24,14 +24,10 @@
  * @type {import('@remix-run/dev/config').AppConfig}
  */
 const config = {
-	appDirectory: 'app',
-	assetsBuildDirectory: 'public/build',
 	devServerBroadcastDelay: 1000,
-	publicPath: '/build/',
-	serverBuildDirectory: 'build',
-	serverModuleFormat: 'esm',
-	serverPlatform: 'neutral',
 	ignoredRouteFiles: ['.*'],
+	server: './server.js',
+	serverBuildTarget: 'cloudflare-pages',
 };
 
 // eslint-disable-next-line unicorn/prefer-module

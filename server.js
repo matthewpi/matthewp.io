@@ -21,28 +21,18 @@
 //
 
 import { createPagesFunctionHandler } from '@remix-run/cloudflare-pages';
-import type { ServerBuild } from '@remix-run/server-runtime';
+import * as build from '@remix-run/dev/server-build.js';
 
-// @ts-expect-error Remix
-import * as build from '../build';
-
-import type { LoadContext } from '~/types';
-
-export async function onRequest(event: EventContext<LoadContext, any, any>): Promise<Response> {
+export async function onRequest(event) {
 	return createPagesFunctionHandler({
-		build: build as unknown as ServerBuild,
-		getLoadContext: (event: EventContext<LoadContext, any, any>): LoadContext => {
+		build,
+		getLoadContext(event) {
 			return {
-				/* eslint-disable @typescript-eslint/naming-convention */
 				KV: event.env.KV,
 
-				SECRET_POST_API_KEY:
-					// @ts-expect-error Replaced by esbuild
-					(event.env.POST_API_KEY as string) ?? (globalThis.MINIFLARE ? 'abc' : ''),
+				SECRET_POST_API_KEY: event.env.POST_API_KEY ?? (globalThis.MINIFLARE ? 'abc' : ''),
 				SECRET_WEBHOOK_API_KEY:
-					// @ts-expect-error Replaced by esbuild
-					(event.env.WEBHOOK_API_KEY as string) ?? (globalThis.MINIFLARE ? 'abc' : ''),
-				/* eslint-enable @typescript-eslint/naming-convention */
+					event.env.WEBHOOK_API_KEY ?? (globalThis.MINIFLARE ? 'abc' : ''),
 
 				waitUntil: event.waitUntil,
 			};

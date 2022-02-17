@@ -1,3 +1,6 @@
+/build/*
+	Cache-Control: public, max-age=31536000, s-maxage=31536000
+
 https://:project.pages.dev/*
 	Link: https://matthewp.io/:splat; rel="canonical"
 	Refresh: 0; url=https://matthewp.io/:splat

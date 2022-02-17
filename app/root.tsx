@@ -136,8 +136,7 @@ function Document({ children, title }: { children: ReactNode; title?: string }) 
 				{children}
 				<ScrollRestoration />
 				<Scripts />
-				{/* eslint-disable-next-line node/prefer-global/process */}
-				{process.env.NODE_ENV === 'development' && <LiveReload />}
+				<LiveReload />
 				<script
 					type="application/ld+json"
 					// eslint-disable-next-line react/no-danger

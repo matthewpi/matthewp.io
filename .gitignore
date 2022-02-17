@@ -64,5 +64,6 @@ yarn-error.log
 
 /.env
 /build
+/functions/\[\[path\]\].js
 /public/build
 /scripts/generated
