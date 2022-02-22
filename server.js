@@ -21,7 +21,7 @@
 //
 
 import { createPagesFunctionHandler } from '@remix-run/cloudflare-pages';
-import * as build from '@remix-run/dev/server-build.js';
+import * as build from '@remix-run/dev/server-build';
 
 export async function onRequest(event) {
 	return createPagesFunctionHandler({
